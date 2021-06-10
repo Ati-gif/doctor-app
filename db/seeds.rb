@@ -7,18 +7,15 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 users = []
-doctors = []
 
 30.times do |i|
   users << User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
 end
 
 3.times do |i|
-  doctors << Doctor.create(last_name: Faker::TvShows::BigBangTheory.character, specialty: Faker::Science.element_subcategory)
-end
-
-10.times do
-  doctor.appointments.create(date: Faker::Date.between(from: '2020-10-23', to: '2020-12-31'), user_id: users.sample.id)
+  doctor = Doctor.create(last_name: Faker::TvShows::BigBangTheory.character, specialty: Faker::Science.element_subcategory)
+  10.times do
+    doctor.appointments.create(date: Faker::Date.between(from: '2020-10-23', to: '2020-12-31'), user_id: users.sample.id)
   end
 end
 
