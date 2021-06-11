@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { Card , Button} from "semantic-ui-react"
 
 const Appointment = (props)=>{
-    const {doctorId, id, name, user, date, deleteAppointment} = props
+    const {doctorId, userid, id, name, date, deleteAppointment} = props
 
     const deleteAppointmentClickHandler = async ()=>{
       try{
@@ -20,7 +20,7 @@ const Appointment = (props)=>{
           <Card.Header>{name}</Card.Header>
           <Card.Meta>{date} Date</Card.Meta>
           <Card.Description>
-            User {user}
+            Patient: {userid}
         </Card.Description>
         </Card.Content>
         <Card.Content extra>

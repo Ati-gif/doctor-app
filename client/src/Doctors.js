@@ -26,7 +26,7 @@ const Doctors = () => {
     return doctors.map((doctor) => {
       return (
         <Link to={`/doctors/${doctor.id}`}>
-          <div>{doctor.last_name}</div>
+          <div>Dr. {doctor.last_name}, Speciality: {doctor.specialty}</div>
         </Link>
       );
     });
