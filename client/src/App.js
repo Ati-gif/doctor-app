@@ -1,36 +1,34 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import Home from "./components/Home";
-import NavBar from "./components/NavBar";
-import Doctorform from "./doctor/Doctorform";
-import Doctors from "./doctor/Doctors";
-import DoctorView from "./doctor/DoctorView";
-import UserForm from "./doctor/UserForm";
+import './App.css';
+import {Route, Switch} from 'react-router-dom'
+import Doctors from './Doctors';
+import Users from './Users';
+import Doctor from './Doctor';
+import NavBar from './components/NavBar';
+import { Container } from 'semantic-ui-react';
+import UpdateDoctorForm from './UpdateDoctorForm';
+import NewDoctorForm from './NewDoctorForm';
+import UpdateAppointmentForm from './UpdateAppointmentForm';
+
 
 function App() {
   return (
     <>
-      <NavBar />
-      <>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/doctors" component={Doctors} />
-          <Route exact path="/doctors/new" component={Doctorform} />
-          <Route
-            exact
-            path="/doctors/:doctor_id/users/:id/edit"
-            component={UserForm}
-          />
-          <Route exact path="/doctors/:id" component={DoctorView} />
-          <Route
-            exact
-            path="/doctors/:doctor_id/new"
-            component={UserForm}
-          />
-        </Switch>
-      </>
+     <NavBar />
+     <Container>
+       <Switch>
+        <Route exact path='/' component={Doctors} />
+        <Route exact path='/users' component={Users} />
+        <Route exact path='/doctors' component={Doctors} />
+        <Route exact path='/doctors/new' component={NewDoctorForm} />
+        <Route exact path='/doctors/:id' component={Doctor} />
+        <Route exact path='/doctors/:id/edit' component={UpdateDoctorForm} />
+        <Route exact path='/doctors/:doctorId/appointments/:id/edit' component={UpdateAppointmentForm} />
+       </Switch>
+      </Container>
     </>
+
   );
 }
 
 export default App;
+

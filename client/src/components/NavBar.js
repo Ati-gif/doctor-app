@@ -1,23 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
+import { Menu } from 'semantic-ui-react'
 
 const NavBar = () => {
-  return (
-    <div style={styles.navbar}>
-      <Link to="/">Home</Link>
-      <span style={{ marginRight: "10px" }}></span>
-      <Link to="/doctors">Doctors</Link>
-      <span style={{ marginRight: "10px" }}></span>
-     
-    </div>
-  );
-};
+    return (
+        <Menu>
+            <Link to='/'>
+                <Menu.Item>
+                    Home
+                </Menu.Item>
+            </Link>
+            <Link to='/doctors'>
+                <Menu.Item>
+                    Doctors
+              </Menu.Item>
+            </Link>
+            <Link to='/users'>
+                <Menu.Item>
+                    Users
+              </Menu.Item>
+            </Link>
 
-const styles = {
-  navbar: {
-    background: "black",
-    padding: "10px",
-  },
-};
+        </Menu>
+    )
+}
 
-export default NavBar;
+export default NavBar

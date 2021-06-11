@@ -1,37 +1,46 @@
 class Api::UsersController < ApplicationController
-  before_action :set_user, only: [:show, :destroy]
-  
+  before_action :set_doctor
+
   def index
-    users = User.all
-    render json: users
+   render json: @doctor.users
   end
 
   def show
-    render json: @user.get_doctors_with_appointments
+    user = @doctor.users.find(params[:id])
+    render json: user
   end
 
   def create
-    @user = User.new(user_params)
+   user = @doctor.users.new(user_params)
+   if(user.save)
+     render json: user
+   else
+     render json: {errors: user.errors}, status: :unprocessable_entity
+   end
+  end
 
-    if @user.save
-      render json: @user
+  def update
+    user = @doctor.users.find(params[:id])
+    if(user.update(user_params))
+      render json: user
     else
-      render json: {error: @user.errors}, status: 422
+      render json: {errors: user.errors}, status: :unprocessable_entity
     end
-  end
+   end
 
-  def destroy
-    @user.destroy
-    render json: @user
-  end
+   def destroy
+    user = @doctor.users.find(params[:id])
+    user.destroy
+    render json: user
+   end
 
   private
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    def user_params
-      params.require(:user).permit(:first_name, :last_name)
-    end
+  def set_doctor
+   @doctor = Doctor.find(params[:doctor_id])
+  end
+
+  def user_params
+   params.require(:user).permit(:first_name, :last_name)
+  end
 end
-
