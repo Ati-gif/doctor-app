@@ -24,7 +24,7 @@ const Doctor = () => {
       setAppointments(res.data.appointments)
 
     } catch (err) {
-      alert('error check console')
+      alert('error check console doctor.js')
     }
   }
 

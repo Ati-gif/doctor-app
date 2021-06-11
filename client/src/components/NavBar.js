@@ -19,6 +19,11 @@ const NavBar = () => {
                     Users
               </Menu.Item>
             </Link>
+            <Link to='/about'>
+                <Menu.Item>
+                    About
+              </Menu.Item>
+            </Link>
 
         </Menu>
     )

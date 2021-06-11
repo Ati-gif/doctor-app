@@ -4,6 +4,7 @@ import Doctors from './Doctors';
 import Users from './Users';
 import Doctor from './Doctor';
 import NavBar from './components/NavBar';
+import About from './components/About';
 import { Container } from 'semantic-ui-react';
 import UpdateDoctorForm from './UpdateDoctorForm';
 import NewDoctorForm from './NewDoctorForm';
@@ -16,7 +17,8 @@ function App() {
      <NavBar />
      <Container>
        <Switch>
-        <Route exact path='/' component={Doctors} />
+       <Route exact path='/' component={Doctors} />
+       <Route exact path='/about' component={About} />
         <Route exact path='/users' component={Users} />
         <Route exact path='/doctors' component={Doctors} />
         <Route exact path='/doctors/new' component={NewDoctorForm} />
