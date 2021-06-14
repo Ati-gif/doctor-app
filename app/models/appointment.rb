@@ -1,7 +1,7 @@
 class Appointment < ApplicationRecord
   belongs_to :user
   belongs_to :doctor
-
+  
   def self.doctor_and_user
     appointments = Appointment.all
     appointments.map do |app|

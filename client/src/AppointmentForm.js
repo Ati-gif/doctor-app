@@ -1,74 +1,109 @@
 import axios from 'axios'
-import React, { useState } from 'react'
-import { Form } from 'semantic-ui-react'
-
+import React, { useState, useEffect } from 'react'
+import { Button, Dropdown, Form } from 'semantic-ui-react'
+import {  DateTimeInput, } from 'semantic-ui-calendar-react';
+import {useParams, useLocation, useHistory} from 'react-router-dom'
 
 const AppointmentForm = (props) => {
-  const {usersData, doctorsData, addApp, editApp, id} = props
+    const location = useLocation()
+    const params = useParams()
+    const history = useHistory()
+    console.log(location)
+    console.log(params)
+    const [doctors, setDoctors] = useState([])
+    const [users, setUsers] = useState([])
+    const [date, setDate] = useState(location.date ? location.date : null )
+    const [selectedUser, setSelectedUser] = useState(location.user_id ? location.user_id : null )
+    const [selectedDoctor, setSelectedDoctor] = useState(location.doctor_id ? location.doctor_id : null)
 
-  const [date, setDate] = useState('')
-  const [userID, setUserID] = useState('')
-  const [doctorID, setDoctorID] = useState('')
-
-  const handleSubmit = async () => {
-    try{
-      if(id){
-        let res = await axios.put(`/api/appointments/${id}`, 
-        {date: date, user_id: userID, doctor_id: doctorID}
-      )
-      editApp(res.data)
-      }else {
-        let res = await axios.post(`/api/appointments`, 
-          {date: date, user_id: userID, doctor_id: doctorID}
-        )
-        addApp(res.data)
-      }
-    } catch(err) {
-      console.log('err',err)
+    useEffect(() => {
+        getDoctors()
+    }, [])
+    const getDoctors = async () => {
+        let res = await axios.get('/api/doctors')
+        let res1 = await axios.get('/api/users')
+        
+        let selectDoctorData = res.data.map(doctor => {
+            return { key: doctor.id, value: doctor.id, text: doctor.last_name }
+        })
+        let selectUserData = res1.data.map(user => {
+            return { key: user.id, value: user.id, text: user.last_name }
+        })
+        setDoctors(selectDoctorData)
+        setUsers(selectUserData)
     }
-  }
 
-  const userChanged = (e, {value}) => {
-    setUserID(value)
-  }
+    const handleSubmit = async () => {
+       if(params.id){
+           
+        let res = await axios.put(`/api/appointments/${params.id}`, {
+            doctor_id: selectedDoctor,
+            user_id: selectedUser,
+            date: date,
+        })
+       }
+       else {
+        
+        let res = await axios.post('/api/appointments', {
+            doctor_id: selectedDoctor,
+            user_id: selectedUser,
+            date: date,
+        })
+       }
 
-  const doctorChanged = (e, {value}) => {
-    setDoctorID(value)
-  }
+       history.push('/appointments')
 
-  return(
-    <div>
-     
-      <Form onSubmit={handleSubmit}>
+    }
+    const handleChange = (event, {name,value}) => {
+        console.log(value)
+        console.log(name)
+        setDate(value)
+    }
+    return (
+        <div>
+            <h1>AppointmentForm</h1>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group widths='equal'>
-                    <Form.Input
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        fluid 
-                        label='Date'
-                        placeholder='Date'
-                    />
+                    <Form.Field>
+                        <label>Doctor</label>
+                        <Dropdown
+                            defaultValue ={selectedDoctor}
+                            onChange={(e, { value }) => setSelectedDoctor(value)}
+                            placeholder='Doctors'
+                            fluid
+                            search
+                            selection
+                            options={doctors}
+                        />
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Users</label>
+                        <Dropdown
+                            defaultValue ={selectedUser}
+                            onChange={(e, { value }) => setSelectedUser(value)}
+                            placeholder='Users'
+                            fluid
+                            search
+                            selection
+                            options={users}
 
-                    <Form.Select
-                        onChange={userChanged}
-                        fluid
-                        label='User'
-                        options={usersData}
-                        placeholder='User'
-                    />
-                    <Form.Select
-                        onChange={doctorChanged}
-                        fluid
-                        label='Doctor'
-                        options={doctorsData}
-                        placeholder='Doctor'
-                    />
+                        />
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Date</label>
+                        <DateTimeInput 
+                            name="date"
+                            placeholder="Date Time"
+                            value={date}
+                            iconPosition="left"
+                            onChange={handleChange}
+                        />
+                    </Form.Field>
                 </Form.Group>
-                <Form.Button basic color='green'>Submit</Form.Button>
+                <Button type='submit'>Submit</Button>
             </Form>
-            
-    </div>
-  )
+        </div>
+    )
 }
 
 export default AppointmentForm

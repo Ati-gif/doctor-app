@@ -7,7 +7,6 @@ import AppointmentForm from './AppointmentForm'
 import useAxios from 'axios-hooks'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { BUTTON } from './styles/styles'
 import { Card, Button } from 'semantic-ui-react'
 
 const Appointments = () => {
