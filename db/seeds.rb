@@ -33,6 +33,8 @@ peral.appointments.create( date: day.sample, doctor_id: willow.id )
 
 garnet.appointments.create( date: day.sample, doctor_id: watson.id )
 rose.appointments.create( date: day.sample, doctor_id: strange.id )
+garnet.appointments.create( date: day.sample, doctor_id: strange.id )
+rose.appointments.create( date: day.sample, doctor_id: watson.id )
 
 connie.appointments.create( date: day.sample, doctor_id: watson.id )
 connie.appointments.create( date: day.sample, doctor_id: cooper.id )
