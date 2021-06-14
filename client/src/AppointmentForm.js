@@ -100,7 +100,7 @@ const AppointmentForm = (props) => {
                         />
                     </Form.Field>
                 </Form.Group>
-                <Button type='submit'>Submit</Button>
+                <Button type='submit' basic color='green' >Submit</Button>
             </Form>
         </div>
     )
