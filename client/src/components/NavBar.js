@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import { Menu } from 'semantic-ui-react'
+import { Grid, Menu, Segment } from 'semantic-ui-react'
 
 const NavBar = () => {
     return (
-        <Menu>
+        <Menu fluid vertical tabular>
             <Link to='/'>
                 <Menu.Item>
                     Home
@@ -29,9 +29,11 @@ const NavBar = () => {
                     About
               </Menu.Item>
             </Link>
-
         </Menu>
+      
     )
-}
+  }
 
+
+    
 export default NavBar

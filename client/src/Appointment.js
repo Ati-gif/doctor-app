@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router'
 import useAxios from 'axios-hooks'
 import useAxiosOnMount from './customHooks/useAxiosOnMount'
-import { BUTTON } from './styles/styles'
+import { Button } from 'semantic-ui-react'
 import AppointmentForm from './AppointmentForm'
 
 const Appointment = (props) => {
@@ -60,7 +60,7 @@ const Appointment = (props) => {
   return(
     <div>
       <h1>Edit Appointment</h1>
-      <BUTTON onClick={showAppUI}>Edit</BUTTON>
+      <Button onClick={showAppUI} basic color='blue'>Edit</Button>
       {showAppForm && <AppointmentForm 
         id={id}
         usersData={formatUsersData()}

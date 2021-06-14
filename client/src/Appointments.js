@@ -70,7 +70,7 @@ const Appointments = () => {
 
   return(
     <div>
-      <BUTTON onClick={showAppUI}>Add Appointment</BUTTON>
+      <Button onClick={showAppUI} basic color='violet'>Add Appointment</Button>
       {showAppForm && <AppointmentForm
         usersData={formatUsersData()}
         doctorsData={formatDoctorsData()}

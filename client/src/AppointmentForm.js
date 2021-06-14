@@ -64,7 +64,7 @@ const AppointmentForm = (props) => {
                         placeholder='Doctor'
                     />
                 </Form.Group>
-                <Form.Button>Submit</Form.Button>
+                <Form.Button basic color='green'>Submit</Form.Button>
             </Form>
             
     </div>
