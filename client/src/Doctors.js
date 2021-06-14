@@ -1,51 +1,30 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { Button } from "semantic-ui-react";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import ErrorMessage from './components/ErrorMessage'
+import List from './components/List'
+import Spinner from './components/Spinner'
+import useAxiosOnMount from './customHooks/useAxiosOnMount'
 
 const Doctors = () => {
-  const [doctors, setDoctors] = useState([]);
-  const [toggleThing, setToggleThing] = useState(false);
+  const {data, loading, error} = useAxiosOnMount('/api/doctors')
 
-  useEffect(() => {
-    console.log("use Effect called");
-    getDoctors();
-  }, []);
+  if(loading) return <Spinner />
+  if(error) return <ErrorMessage error={error}/>
 
-  const getDoctors = async () => {
-    try {
-      let res = await axios.get("/api/doctors");
-      setDoctors(res.data);
-      console.log("setDoctors");
-    } catch (err) {
-      alert("error occured look at console doctors");
-    }
-  };
+  return(
+    <div>
+      <List 
+      renderData={(doctor)=>{
+        return(
+          <Link key={doctor.id} to={`/doctors/${doctor.id}`}>
+            <h1>{doctor.last_name}, {doctor.specialty}</h1>
+          </Link>
+        )
+      }}
+      data={data}
+      name='Doctors'/>
+    </div>
+  )
+}
 
-  const renderDoctors = () => {
-    return doctors.map((doctor) => {
-      return (
-        <Link to={`/doctors/${doctor.id}`}>
-          <div>Dr. {doctor.last_name}, Speciality: {doctor.specialty}</div>
-        </Link>
-      );
-    });
-  };
-  return (
-    <>
-      <h1 style={{ display: "flex", justifyContent: "space-between" }}>
-        <span>Doctors</span>
-        <Link to="/doctors/new">
-          <Button>New Doctor</Button>
-        </Link>
-        <Button onClick={() => setToggleThing(!toggleThing)}>
-          toggleThing
-        </Button>
-        {toggleThing && <p>Appointment</p>}
-      </h1>
-      {renderDoctors()}
-    </>
-  );
-};
-
-export default Doctors;
+export default Doctors

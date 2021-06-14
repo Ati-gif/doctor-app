@@ -1,76 +1,45 @@
 import axios from 'axios'
-import { useState, useEffect } from 'react'
-import { useParams, useHistory, Link } from 'react-router-dom'
-import { Button, Card } from 'semantic-ui-react'
-import NewAppointmentForm from './NewAppointmentForm'
-import Appointment from './Appointment'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import ErrorMessage from './components/ErrorMessage'
+import List from './components/List'
+import Spinner from './components/Spinner'
+import useAxiosOnMount from './customHooks/useAxiosOnMount'
 
 
 const User = () => {
-  const { id } = useParams()
-  let history = useHistory();
+  const {id} = useParams()
+  const {data, loading, error} = useAxiosOnMount(`/api/users/${id}`)
+  const [doctors, setDoctors] = useState([])
 
-  const [user, setUser] = useState({})
-  const [showNewForm, setShowNewForm] = useState(false)
-  const [appointments, setAppointments] = useState([])
-  useEffect(() => {
-    getUser()
+  useEffect(()=>{
+    getDoctors()
   }, [])
 
-  const getUser = async () => {
-    try {
-      let res = await axios.get(`/api/users/${id}`)
-      setUser(res.data.user)
-      setAppointments(res.data.appointments)
-
-    } catch (err) {
-      alert('error check console user.js')
+  
+    const getDoctors = async () => {
+      let res = await axios.get(`/api/doctors`)
+      setDoctors(res.data)
     }
-  }
 
-  const deleteUser = async () => {
-    let res = await axios.delete(`/api/users/${id}`)
-    history.push('/')
-  }
-
-  const deleteAppointment = (idOfAppointmentThatWasDeleted) =>{
-      const filterAppointments = appointments.filter(v => v.id !== idOfAppointmentThatWasDeleted)
-      setAppointments(filterAppointments)
-  }
-  const renderAppointments = ()=>{
-    return appointments.map(appointment => <Appointment deleteAppointment={deleteAppointment} key={appointment.id} userId={id} {...appointment}/>)
-  }
-
-  const addAppointment =(appointment)=>{
-    const newAppointments = [appointment, ...appointments]
-    setAppointments(newAppointments)
-  }
-  return (
-    <>
-     <Button onClick={() => history.goBack()}>go back</Button>
-      <Card fluid color='red'>
-      <Card.Content>
-         <Card.Header style={{display:'flex', justifyContent:'space-between'}}>
-           {user.name} 
-           <div >
-             <Button color='red' onClick={deleteUser}>Delete</Button>
-             <Link  to={{ pathname:`/users/${id}/edit`, user: user,  x:'Appointment' }}>
-                <Button>Update</Button>
-             </Link>
+       
+    if(loading) return <Spinner />
+    if(error) return <ErrorMessage error={error}/>
+    return(
+    <div>
+      <List 
+        last_name={`Appointments for ${data.user}`}
+        data={data.appointment}
+        renderData = {(a)=> {
+          return (
+            <div key={a.id} style={{marginBottom: '15px'}}>
+              <h2>{a.doctor}</h2>
+              <h4>{a.appDate}</h4>
            </div>
-         </Card.Header>
-         </Card.Content>
-        </Card>
-
-        <Button style={{marginBottom:'20px'}} color='green' onClick={()=> setShowNewForm(!showNewForm)} >
-         {showNewForm ? 'hide form': 'New Appointment'}
-        </Button>
-       {showNewForm && <NewAppointmentForm setShowNewForm={setShowNewForm} addAppointment={addAppointment} userId={id} />}
-      <Card.Group>
-        {renderAppointments()}
-      </Card.Group>
-     
-    </>
+          )
+        }}
+      />
+    </div>
   )
 }
 

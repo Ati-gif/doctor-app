@@ -2,6 +2,11 @@ App {
   text-align: center;
 }
 
+h1 {
+  color:rgb(112, 111, 111);
+  background-color: lavenderblush;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -14,7 +19,7 @@ App {
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #ff8d23;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

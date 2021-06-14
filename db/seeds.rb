@@ -6,20 +6,37 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-users = []
+User.destroy_all
+Doctor.destroy_all
 
-30.times do |i|
-  users << User.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
-end
 
-3.times do |i|
-  doctor = Doctor.create(last_name: Faker::TvShows::BigBangTheory.character, specialty: Faker::Science.element_subcategory)
-  10.times do
-    doctor.appointments.create(date: Faker::Date.between(from: '2020-10-23', to: '2020-12-31'), user_id: users.sample.id)
-  end
-end
+day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
-puts "seeded"
+
+steven = User.create( first_name: 'Steven', last_name:'Universe')
+peral = User.create( first_name: 'Peral', last_name:'Universe')
+garnet = User.create( first_name: 'Garnet', last_name:'Universe')
+rose = User.create( first_name: 'Rose', last_name:'Universe')
+connie = User.create( first_name: 'Connie', last_name:'Universe')
+
+cooper = Doctor.create( last_name: 'Dr. Cooper', specialty:Faker::Science.element_subcategory)
+strange = Doctor.create( last_name: 'Dr. Strange', specialty:Faker::Science.element_subcategory)
+suess = Doctor.create( last_name: 'Dr. Suess', specialty:Faker::Science.element_subcategory)
+willow = Doctor.create( last_name: 'Dr. Willow', specialty:Faker::Science.element_subcategory)
+watson = Doctor.create( last_name: 'Dr. Watson', specialty:Faker::Science.element_subcategory)
+
+steven.appointments.create( date: day.sample, doctor_id: cooper.id )
+steven.appointments.create( date: day.sample, doctor_id: strange.id )
+
+peral.appointments.create( date: day.sample, doctor_id: suess.id )
+peral.appointments.create( date: day.sample, doctor_id: willow.id )
+
+garnet.appointments.create( date: day.sample, doctor_id: watson.id )
+rose.appointments.create( date: day.sample, doctor_id: strange.id )
+
+connie.appointments.create( date: day.sample, doctor_id: watson.id )
+connie.appointments.create( date: day.sample, doctor_id: cooper.id )
+
+puts  User.all.size
 puts Doctor.all.size
-puts User.all.size
 puts Appointment.all.size

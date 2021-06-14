@@ -9,9 +9,19 @@ const NavBar = () => {
                     Home
                 </Menu.Item>
             </Link>
+            <Link to='/doctors'>
+                <Menu.Item>
+                    Doctors
+              </Menu.Item>
+            </Link>
             <Link to='/users'>
                 <Menu.Item>
                     Users
+              </Menu.Item>
+            </Link>
+            <Link to='/appointments'>
+                <Menu.Item>
+                    Appointments
               </Menu.Item>
             </Link>
             <Link to='/about'>
