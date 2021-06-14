@@ -1,34 +1,44 @@
 import { Link } from 'react-router-dom'
-import { Grid, Menu, Segment } from 'semantic-ui-react'
+import {Menu, Button} from 'semantic-ui-react'
 
 const NavBar = () => {
     return (
-        <Menu fluid vertical tabular>
+        <Menu>
+          <Button basic color='teal'>
             <Link to='/'>
                 <Menu.Item>
                     Home
                 </Menu.Item>
             </Link>
+            </Button>
+            <Button basic color='teal'>
             <Link to='/doctors'>
                 <Menu.Item>
                     Doctors
               </Menu.Item>
             </Link>
+            </Button>
+            <Button basic color='teal'>
             <Link to='/users'>
                 <Menu.Item>
                     Users
               </Menu.Item>
             </Link>
+            </Button>
+            <Button basic color='teal'>
             <Link to='/appointments'>
                 <Menu.Item>
                     Appointments
               </Menu.Item>
             </Link>
+          </Button>
+          <Button basic color='teal'>
             <Link to='/about'>
                 <Menu.Item>
                     About
               </Menu.Item>
             </Link>
+            </Button>
         </Menu>
       
     )
